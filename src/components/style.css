@@ -1,0 +1,150 @@
+.App {
+  display: flex;
+  height: 100vh;
+}
+.board {
+  box-sizing: content-box;
+  margin: auto;
+  height: fit-content;
+  width: fit-content;
+  background-color: burlywood;
+  border: 15px solid black;
+}
+.checker {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  position:relative;
+  z-index: 1;
+  box-shadow: 0px 3px 2px rgb(78 78 78);
+}
+
+.checker.picked {
+  background-color: blue;
+}
+
+.checker::after,.checker::before {
+  content: "";
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform:translateX(-50%) translateY(-50%);
+  border-radius: 100%;
+  box-shadow: 0px 1px 5px rgb(78 78 78);
+  border: 3px solid rgba(78,78,78,0.45);
+}
+.checker::before {
+  width: 70%;
+  height: 70%;
+}
+
+.checker::after {
+  width: 25%;
+  height: 25%;
+}
+
+.white {
+  background-color:white;
+}
+.red {
+  background-color: red;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  width: 80px;
+  height: 270px;
+  align-items: center;
+}
+
+
+.tile.down::after,
+.tile.up::after {
+  content: "";
+  position: absolute;
+  border-left: 35px solid transparent;
+  border-right: 35px solid transparent;
+}
+.tile.up {
+  justify-content: flex-end;
+}
+
+.tile.down::after {
+  transform: rotate(180deg);
+}
+
+.tile.gray::after {
+  border-bottom: 220px solid rgb(78, 78, 78);
+}
+
+.tile.black::after {
+  border-bottom: 220px solid black;
+}
+
+
+
+.blue {
+  background-color: rgba(6, 46, 179, 0.445);
+}
+
+
+
+
+/* dice */
+
+.dice {
+  width:30px;
+  height: 30px;
+  z-index: 3;
+  transform-style: preserve-3d;
+  transform: translateZ(-110px);
+  transition: transform 1s;
+}
+
+.cube-face {
+  width: 30px;
+  height: 30px;
+  border: 2px solid white;
+  line-height: 30px;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  position: absolute;
+}
+
+
+
+.dice.show1  { transform: translateZ(-100px) rotateY(   0deg); }
+.dice.show2  { transform: translateZ(-100px) rotateY(-180deg); }
+.dice.show3  { transform: translateZ(-100px) rotateY( -90deg); }
+.dice.show4   { transform: translateZ(-100px) rotateY(  90deg); }
+.dice.show5   { transform: translateZ(-100px) rotateX( -90deg); }
+.dice.show6 { transform: translateZ(-100px) rotateX(  90deg); }
+
+.cube-face1  { background: black;  opacity: 0.75;}
+.cube-face2  { background: black;   opacity: 0.75; }
+.cube-face3  {  background: black;   opacity: 0.75; }
+.cube-face4  {  background: black;   opacity: 0.75; }
+.cube-face5   {  background: black;   opacity: 0.75; }
+.cube-face6 {  background: black;  opacity: 0.75; }
+
+.cube-face1  { transform: rotateY(  0deg) translateZ(100px); }
+.cube-face2   { transform: rotateY(180deg) translateZ(100px); }
+.cube-face3  { transform: rotateY( 90deg) translateZ(100px); }
+.cube-face4   { transform: rotateY(-90deg) translateZ(100px); }
+.cube-face5   { transform: rotateX( 90deg) translateZ(100px); }
+.cube-face6 { transform: rotateX(-90deg) translateZ(100px); }
+
+
+.dices-box {
+  position:absolute;
+  display:flex;
+  flex-direction: column;
+  z-index:10;
+  top:50%;
+  left:50%;
+  transform: translateY(-50%) translateX(-50%);
+
+}
