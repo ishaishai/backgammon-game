@@ -39,7 +39,11 @@ const Board = (props) => {
     waitingW: 0,
   });
   const [playerTurn, setPlayerTurn] = useState("B");
-  const [pickedCheckers, setPickedCheckers] = useState([]);
+  const [pickedCheckers, setPickedCheckers] = useState({
+    i: -1,
+    j: -1,
+    count: 0,
+  });
   const [toggleError, setToggleError] = useState(false);
 
   useEffect(() => {
@@ -48,21 +52,64 @@ const Board = (props) => {
     }
   }, [state.B, state.W]);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(pickedCheckers);
-  },[pickedCheckers])
+  }, [pickedCheckers]);
   const pickChecker = (i, j) => {
     //how many checkers do you want to select from that index
-    if (state.matrix[i][j].split("")[0] === playerTurn){
+    if (state.matrix[i][j].split("")[0] === playerTurn) {
       //need to change structure to { i,j,count} cause selecting multiple checkers in same tile
-      setPickedCheckers(prev => [...prev,{ i, j }]);}
+      let isDouble = props.dices[0] === props.dices[1] ? true : false;
+      console.log(isDouble);
+      if (
+        isDouble &&
+        ((pickedCheckers.count < 4 &&
+          pickedCheckers.count < state.matrix[i][j].length) ||
+          i !== pickedCheckers.i ||
+          j !== pickedCheckers.j)
+      ) {
+        setPickedCheckers({
+          i,
+          j,
+          count:
+            i === pickedCheckers.i && j === pickedCheckers.j
+              ? pickedCheckers.count + 1
+              : 1,
+        });
+      } else if (!isDouble) {
+        setPickedCheckers({
+          i,
+          j,
+          count: 1,
+        });
+      }
+      else {
+        console.log("IN ELSE");
+      }
+    }
   };
 
   //check if picked a tile which has differnce of 2 and a oppomnent checker if so eat it! :]
   const pickTile = (i, j) => {
-    console.log(i, j);
-    if (pickedCheckers.length>0) {
-      
+    let tmpMatrix = [...state.matrix];
+    if (pickedCheckers.count > 0) {
+      if (state.matrix[i][j] === null || state.matrix[i][j][0] === playerTurn) {
+        tmpMatrix[i][j] = tmpMatrix[i][j]
+          ? tmpMatrix[i][j] + playerTurn.repeat(pickedCheckers.count)
+          : playerTurn.repeat(pickedCheckers.count);
+        // console.log(tmpMatrix);
+        // console.log(pickedCheckers.i, pickedCheckers.j);
+        tmpMatrix[pickedCheckers.i][pickedCheckers.j] = playerTurn.repeat(
+          tmpMatrix[pickedCheckers.i][pickedCheckers.j].length -
+            pickedCheckers.count
+        );
+        console.log(tmpMatrix);
+        // setState((prev) => {
+        //   return { ...prev, matrix: tmpMatrix };
+        // });
+        setPickedCheckers({ i: -1, j: -1, count: 0 });
+      }
+      // if(state.matrix[i][j].length>0 && state.matrix[i][j][[0]===playerTurn])
     }
 
     //if a successful move made and a error is shown
@@ -80,15 +127,15 @@ const Board = (props) => {
           }
           line.push(
             <Tile
-              tileColor={
-                 (i + j) % 2
-                  ? "gray"
-                  : "black"
-              }
+              tileColor={(i + j) % 2 ? "brown" : "browner"}
               checkers={tileCheckers}
               pickTile={pickTile}
               pickChecker={tileCheckers !== null && pickChecker}
-              picked = {pickedCheckers.some((item) => item.i === i && item.j ===j)}
+              picked={
+                pickedCheckers.i === i && pickedCheckers.j === j
+                  ? pickedCheckers.count
+                  : 0
+              }
               i={i}
               j={j}
             />

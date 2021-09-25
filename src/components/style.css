@@ -7,7 +7,7 @@
   margin: auto;
   height: fit-content;
   width: fit-content;
-  background-color: burlywood;
+  background-color: darkslategray;
   border: 15px solid black;
 }
 .checker {
@@ -46,8 +46,8 @@
 .white {
   background-color:white;
 }
-.red {
-  background-color: red;
+.black {
+  background-color: black;
 }
 
 .tile {
@@ -74,12 +74,12 @@
   transform: rotate(180deg);
 }
 
-.tile.gray::after {
-  border-bottom: 220px solid rgb(78, 78, 78);
+.tile.brown::after {
+  border-bottom: 220px solid brown;
 }
 
-.tile.black::after {
-  border-bottom: 220px solid black;
+.tile.browner::after {
+  border-bottom: 220px solid burlywood;
 }
 
 
@@ -88,6 +88,11 @@
   background-color: rgba(6, 46, 179, 0.445);
 }
 
+hr {
+  width: 50px;
+  background-color: blanchedalmond;
+  margin: 0;
+}
 
 
 

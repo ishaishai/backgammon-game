@@ -11,19 +11,20 @@ const Tile = (props) => {
     >
       {/* {`${props.i} ${props.j}`} */}
       {props.checkers && props.checkers.split("").map((checker,index) => {     
-        if(index===props.checkers.length-1) {return   <Checker
-          color={checker==="B" ? "red" : "white"}
+        if(index<props.picked) {return   <Checker
+          color={checker==="B" ? "black" : "white"}
           pickChecker={props.pickChecker}
-          picked={props.picked}
+          picked={true}
           i={props.i}
           j={props.j}
         />}
         else {
           return <Checker
-          color={checker==="B" ? "red" : "white"}
+          color={checker==="B" ? "black" : "white"}
           pickChecker={props.pickChecker}
           i={props.i}
           j={props.j}
+          picked={false}
         />
         }
       })}

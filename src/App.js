@@ -34,7 +34,7 @@ function App() {
 
   return (
     <div className="App">
-      <Board />
+      <Board dices = {currentDices} />
       <div className="dices-box">
         <Dice num = {currentDices[0]} />
         <Dice num = {currentDices[1]} />
